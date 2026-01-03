@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum TonePreset {
+  港式貼地
+  比較正經
+  Foodie認真
+  搞鬼得意
+}
+
+model Restaurant {
+  id              Int           @id @default(autoincrement())
+  name            String
+  slug            String        @unique
+  address         String?
+  googleReviewUrl String?
+  instagramHandle String?
+  defaultHashtags String?
+  tonePreset      TonePreset    @default(港式貼地)
+  createdAt       DateTime      @default(now())
+  sessions        Session[]
+  generations     Generation[]
+}
+
+model Session {
+  id          Int           @id @default(autoincrement())
+  restaurant  Restaurant    @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+  createdAt   DateTime      @default(now())
+  source      String?
+  userAgent   String?
+  locale      String?
+  table       String?
+  generations Generation[]
+}
+
+model Generation {
+  id            Int        @id @default(autoincrement())
+  session       Session    @relation(fields: [sessionId], references: [id])
+  sessionId     Int
+  restaurant    Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId  Int
+  rating        String?
+  vibe          String?
+  recommendFor  String?
+  orderTags     String?
+  orderFreeText String?
+  language      String?
+  toneChoice    String?
+  hasImage      Boolean     @default(false)
+  captionA      String
+  captionB      String
+  hashtags      String
+  imagePath     String?
+  createdAt     DateTime    @default(now())
+}
