@@ -20,6 +20,17 @@ ADMIN_PASSWORD="自訂管理密碼"
 NEXTAUTH_SECRET="隨機字串"
 ```
 
+## Quick preview (English)
+If you just want to see the screens quickly, follow these steps:
+
+1. Copy env file: `cp .env.example .env` and set at least `ADMIN_PASSWORD`; add `OPENAI_API_KEY` if you want real AI output.
+2. Install deps: `npm install`.
+3. Set up DB: `npx prisma migrate dev` (creates `dev.db` in `prisma`).
+4. Seed sample restaurant (recommended): `npx ts-node scripts/seed.ts`.
+5. Run dev server: `npm run dev`.
+6. Open customer flow at `http://localhost:3000/r/demo-restaurant` to view the photo/upload + quick-pick UI.
+7. Open admin at `http://localhost:3000/admin/login` and sign in with your `ADMIN_PASSWORD` to manage restaurants / QR codes.
+
 ## 安裝 & 運行（超詳細步驟）
 1. 安裝 Node.js 18+（推介用 nvm）。
 2. 於專案根目錄複製環境檔：`cp .env.example .env`，填好 `OPENAI_API_KEY`（沒有亦可，會用 fallback 文案）、`ADMIN_PASSWORD`、`NEXTAUTH_SECRET`。
